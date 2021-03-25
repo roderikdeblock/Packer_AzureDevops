@@ -2,28 +2,40 @@ trigger:
 - main
 
 stages:
-- stage: Prerequisites_
-  variables:
-  - group: Packer
+- stage: Build_Deploy_W10
   pool: 'Default'
-  jobs:   
-  - job: Checking_Prerequisites
-    displayName: 'Checking Prerequisites'
-    steps: 
-    - task: PowerShell@2
-      displayName: 'Checking Prerequisites'
-      inputs:
-       filePath: '$(System.DefaultWorkingDirectory)\Prereq.ps1'
+  jobs:  
   - job: Building_Image
-    dependsOn: Checking_Prerequisites
-    condition: succeeded()
     displayName: 'Building_Image'
+    steps: 
+    - task: CopyFiles@2
+      displayName: 'Copy Files to: $(System.DefaultWorkingDirectory)'
+      inputs:
+       SourceFolder: '$(System.DefaultWorkingDirectory)/_screenshot'
+       TargetFolder: '$(System.DefaultWorkingDirectory)'
+    - task: PowerShell@2
+      displayName: 'Building_Image'
+      inputs:
+        filePath: '$(System.DefaultWorkingDirectory)\Build.ps1'
+
+- stage:  Deploy_To_TST
+  pool: 'Default'
+  jobs:  
+  - job: Deploy_To_TST
+    displayName: 'Deploy_To_TST'
     steps: 
     - task: PowerShell@2
       displayName: 'Building_Image'
       inputs:
-       filePath: '$(System.DefaultWorkingDirectory)\Build.ps1'
+       filePath: '$(System.DefaultWorkingDirectory)\Deploy_To_Horizon_ACC.ps1'
+       
+- stage: Deploy_To_ACC
+  pool: 'Default'
+  jobs:         
+  - job: Deploy_To_ACC
+    displayName: 'Deploy_To_ACC'
+    steps: 
     - task: PowerShell@2
-      displayName: 'Deploy_To_Horizon'
+      displayName: 'Building_Image'
       inputs:
-       filePath: '$(System.DefaultWorkingDirectory)\Deploy_To_Horizon.ps1'
+       filePath: '$(System.DefaultWorkingDirectory)\Deploy_To_Horizon_ACC.ps1' 
