@@ -1,17 +1,5 @@
-#############################################################
-##                                                         ##
-##          Waiting ............ 5 minutes                 ##
-##                                                         ##
-#############################################################
 
 
-Start-Sleep -Seconds 300
-
-#############################################################
-##                                                         ##
-##  Converting Variables from AzureDevOps Variable Group   ##
-##                                                         ##
-#############################################################
 
 $User = "<Your_Horizon_Administrator>"
 $Password = "<Your_Horizon_Administrator_Password>"
