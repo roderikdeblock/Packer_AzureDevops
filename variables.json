@@ -1,0 +1,23 @@
+{
+
+
+    "vsphere-server": "Your_server",
+        "vsphere-user": "administrator@vsphere.local",
+        "vsphere-password": "Your_Password",
+        
+        "vsphere-datacenter": "Your_DataCenter",
+        "vsphere-cluster": "Your_Cluster",
+        "vsphere-network": "Your_NetWork",
+        "vsphere-datastore": "Your_DataStore",
+        "vsphere-folder": "Your_VmFolder",
+          
+          "vm-name": "Your_Template",
+          "vm-cpu-num": "2",
+          "vm-mem-size": "4096",
+          "vm-disk-size": "40960",
+          "winadmin-password": "Your WindowsPassword",
+          "os_iso_path": "[Datstore] Your ISO .ISO",
+          "winrm_username": "Administrator"
+            
+        
+    }

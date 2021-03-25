@@ -1,0 +1,29 @@
+trigger:
+- main
+
+stages:
+- stage: Prerequisites_
+  variables:
+  - group: Packer
+  pool: 'Default'
+  jobs:   
+  - job: Checking_Prerequisites
+    displayName: 'Checking Prerequisites'
+    steps: 
+    - task: PowerShell@2
+      displayName: 'Checking Prerequisites'
+      inputs:
+       filePath: '$(System.DefaultWorkingDirectory)\Prereq.ps1'
+  - job: Building_Image
+    dependsOn: Checking_Prerequisites
+    condition: succeeded()
+    displayName: 'Building_Image'
+    steps: 
+    - task: PowerShell@2
+      displayName: 'Building_Image'
+      inputs:
+       filePath: '$(System.DefaultWorkingDirectory)\Build.ps1'
+    - task: PowerShell@2
+      displayName: 'Deploy_To_Horizon'
+      inputs:
+       filePath: '$(System.DefaultWorkingDirectory)\Deploy_To_Horizon.ps1'
